@@ -1,0 +1,3 @@
+MindGarden keeps Alembic in backend/src/alembic to satisfy the required split.
+The Docker bootstrap uses database/init.sql plus SQLAlchemy metadata creation.
+

@@ -1,0 +1,257 @@
+:root {
+  font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --bg: #f6f4ec;
+  --surface: #fffaf0;
+  --surface-strong: #ecdfc8;
+  --text: #26312b;
+  --muted: #6b746c;
+  --primary: #4b9b8f;
+  --accent: #f2a541;
+  --danger: #bf4a3c;
+  --border: rgba(50, 59, 47, 0.15);
+}
+
+:root.theme-forest {
+  --bg: #17211b;
+  --surface: #223026;
+  --surface-strong: #314335;
+  --text: #f1ead7;
+  --muted: #b9c1ae;
+  --primary: #86bcae;
+  --accent: #e6b65d;
+  --danger: #d78372;
+  --border: rgba(241, 234, 215, 0.16);
+}
+
+:root.theme-sunrise {
+  --bg: #f7eadb;
+  --surface: #fff8ed;
+  --surface-strong: #f0cfa4;
+  --text: #392f29;
+  --muted: #77675d;
+  --primary: #d37757;
+  --accent: #4b9b8f;
+  --danger: #ad4f45;
+  --border: rgba(57, 47, 41, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-shell {
+  min-height: 100vh;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, transparent), transparent 28%),
+    linear-gradient(315deg, color-mix(in srgb, var(--accent) 16%, transparent), transparent 34%),
+    var(--bg);
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px clamp(18px, 4vw, 46px);
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--surface);
+}
+
+.app-nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.app-nav a {
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.app-nav a.active {
+  color: var(--text);
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.page {
+  width: min(1180px, calc(100vw - 32px));
+  margin: 0 auto;
+  padding: 28px 0 56px;
+}
+
+.page-title {
+  margin: 0 0 18px;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.05;
+  color: var(--text);
+}
+
+.page-kicker {
+  color: var(--muted);
+  margin: 0 0 24px;
+  max-width: 720px;
+}
+
+.grid {
+  display: grid;
+  gap: 18px;
+}
+
+.grid.two {
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+}
+
+.grid.three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.panel {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 20px;
+}
+
+.panel h2,
+.panel h3 {
+  color: var(--text);
+  margin-top: 0;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.mood-selector {
+  display: grid;
+  gap: 14px;
+}
+
+.mood-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mood-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  background: color-mix(in srgb, var(--surface) 92%, var(--primary));
+}
+
+.mood-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.tone-strip {
+  height: 8px;
+  border-radius: 99px;
+  margin-top: 12px;
+}
+
+.timeline-list {
+  display: grid;
+  gap: 12px;
+}
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  color: var(--muted);
+  text-align: center;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+}
+
+.assessment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.assessment-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.journal-editor {
+  display: grid;
+  gap: 12px;
+}
+
+.profile-band {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 20px;
+  align-items: center;
+}
+
+@media (max-width: 820px) {
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .grid.two,
+  .grid.three,
+  .profile-band {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -1,0 +1,2 @@
+"""Pydantic schemas by entity."""
+

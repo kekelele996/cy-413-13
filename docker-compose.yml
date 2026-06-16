@@ -1,0 +1,75 @@
+name: mindgarden
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: ${COMPOSE_PROJECT_NAME:-mindgarden}_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-mindgarden_db}
+      POSTGRES_USER: ${DB_USER:-mindgarden_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-mindgarden_pwd}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - mindgarden_pgdata:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-mindgarden_user} -d ${DB_NAME:-mindgarden_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 8
+      start_period: 10s
+    networks:
+      - mindgarden_net
+
+  backend:
+    build:
+      context: ./backend
+    container_name: ${COMPOSE_PROJECT_NAME:-mindgarden}_backend
+    restart: unless-stopped
+    environment:
+      APP_NAME: MindGarden
+      DATABASE_URL: postgresql+psycopg2://${DB_USER:-mindgarden_user}:${DB_PASSWORD:-mindgarden_pwd}@db:5432/${DB_NAME:-mindgarden_db}
+      JWT_SECRET: ${JWT_SECRET:-change_me_to_a_long_random_string}
+      JWT_ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 1440
+      CORS_ORIGINS: http://localhost:${FRONTEND_PORT:-18413}
+    ports:
+      - "${BACKEND_PORT:-19413}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health').read()\""]
+      interval: 10s
+      timeout: 5s
+      retries: 8
+      start_period: 15s
+    networks:
+      - mindgarden_net
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: ${COMPOSE_PROJECT_NAME:-mindgarden}_frontend
+    restart: unless-stopped
+    environment:
+      VITE_API_BASE_URL: /api
+    ports:
+      - "${FRONTEND_PORT:-18413}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - mindgarden_net
+
+volumes:
+  mindgarden_pgdata:
+    name: ${COMPOSE_PROJECT_NAME:-mindgarden}_pgdata
+
+networks:
+  mindgarden_net:
+    name: ${COMPOSE_PROJECT_NAME:-mindgarden}_net
+

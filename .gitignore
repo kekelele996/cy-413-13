@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+.DS_Store
+*.log
+.idea/
+.vscode/
+backend/__pycache__/
+frontend/coverage/
+*.pyc
+.pytest_cache/
+backend/.venv/
+frontend/.vite/
+*.tsbuildinfo
