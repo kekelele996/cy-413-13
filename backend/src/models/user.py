@@ -23,4 +23,5 @@ class User(Base):
     moods = relationship("Mood", back_populates="user", cascade="all, delete-orphan")
     journals = relationship("Journal", back_populates="user", cascade="all, delete-orphan")
     assessment_results = relationship("UserAssessment", back_populates="user", cascade="all, delete-orphan")
+    mood_tags = relationship("UserMoodTag", back_populates="user", cascade="all, delete-orphan")
 

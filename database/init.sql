@@ -22,6 +22,17 @@ CREATE TABLE IF NOT EXISTS moods (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE IF NOT EXISTS user_mood_tags (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  tag_key VARCHAR(64) NOT NULL,
+  label VARCHAR(64) NOT NULL,
+  color VARCHAR(16) NOT NULL DEFAULT '#6b7280',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  CONSTRAINT uq_user_mood_tags_user_tag UNIQUE (user_id, tag_key)
+);
+CREATE INDEX IF NOT EXISTS idx_user_mood_tags_user_id ON user_mood_tags(user_id);
+
 CREATE TABLE IF NOT EXISTS assessments (
   id SERIAL PRIMARY KEY,
   title VARCHAR(200) NOT NULL,

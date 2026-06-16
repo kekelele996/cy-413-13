@@ -1,6 +1,6 @@
 import { createBrowserRouter, NavLink, Navigate, Outlet } from 'react-router-dom';
 import { Button, Select } from 'antd';
-import { Flower2, NotebookPen, UserRound, Waves, ClipboardCheck } from 'lucide-react';
+import { Flower2, NotebookPen, Tags, UserRound, Waves, ClipboardCheck } from 'lucide-react';
 import { GlobalErrorBoundary } from '../components/common/GlobalErrorBoundary';
 import { THEME_OPTIONS, type ThemeName } from '../constants/themes';
 import { useTheme } from '../hooks/useTheme';
@@ -8,6 +8,7 @@ import { Assessments } from '../pages/Assessments';
 import { Dashboard } from '../pages/Dashboard';
 import { Journals } from '../pages/Journals';
 import { Moods } from '../pages/Moods';
+import { MoodTags } from '../pages/MoodTags';
 import { Profile } from '../pages/Profile';
 import { AuthGuard } from './guards';
 
@@ -29,6 +30,7 @@ function Shell() {
           <nav className="app-nav">
             <NavLink to="/dashboard"><Waves size={15} /> 心情花园</NavLink>
             <NavLink to="/moods">情绪记录</NavLink>
+            <NavLink to="/mood-tags"><Tags size={15} /> 标签管理</NavLink>
             <NavLink to="/assessments"><ClipboardCheck size={15} /> 心理测评</NavLink>
             <NavLink to="/journals"><NotebookPen size={15} /> 日记本</NavLink>
             <NavLink to="/profile"><UserRound size={15} /> 个人中心</NavLink>
@@ -57,6 +59,7 @@ export const router = createBrowserRouter([
         children: [
           { path: 'dashboard', element: <Dashboard /> },
           { path: 'moods', element: <Moods /> },
+          { path: 'mood-tags', element: <MoodTags /> },
           { path: 'assessments', element: <Assessments /> },
           { path: 'journals', element: <Journals /> },
           { path: 'profile', element: <Profile /> },

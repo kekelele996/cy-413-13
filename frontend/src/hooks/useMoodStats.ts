@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { MoodTag } from '../constants/mood';
 import type { Mood } from '../types';
+import { getTagLabel } from '../utils/moodColor';
 
 export function useMoodStats(moods: Mood[]) {
   return useMemo(() => {
@@ -11,14 +11,15 @@ export function useMoodStats(moods: Mood[]) {
       });
       return acc;
     }, {});
-    const dominantTag = (Object.entries(tagCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || MoodTag.CALM) as MoodTag;
+    const dominantTagKey = Object.entries(tagCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'calm';
+    const dominantTag = getTagLabel(dominantTagKey);
 
     return {
       avgMood: Number(avg.toFixed(1)),
       total: moods.length,
       dominantTag,
+      dominantTagKey,
       tagCounts,
     };
   }, [moods]);
 }
-

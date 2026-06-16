@@ -14,16 +14,17 @@ import { useState } from 'react';
 
 export function Dashboard() {
   const { token } = useAuth();
-  const { moods, trend, loadMoods, loadTrend, createMood } = useMoodStore();
+  const { moods, trend, loadMoods, loadTrend, createMood, loadAllTags } = useMoodStore();
   const stats = useMoodStats(moods);
   const [assessments, setAssessments] = useState<Assessment[]>([]);
 
   useEffect(() => {
     if (!token) return;
+    loadAllTags();
     loadMoods();
     loadTrend();
     getAssessments().then((items) => setAssessments(items.slice(0, 2))).catch(() => setAssessments([]));
-  }, [token, loadMoods, loadTrend]);
+  }, [token, loadMoods, loadTrend, loadAllTags]);
 
   return (
     <main className="page">

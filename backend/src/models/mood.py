@@ -22,6 +22,5 @@ class Mood(Base):
     user = relationship("User", back_populates="moods")
 
     def validate_tags_for_log_coupling(self) -> list[str]:
-        allowed = {item.value for item in MoodTag}
-        return [tag for tag in self.mood_tags if tag in allowed]
+        return list(self.mood_tags)
 

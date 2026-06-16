@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 import { Tag } from 'antd';
-import { MOOD_LEVEL_LABELS, MOOD_TAG_LABELS } from '../../constants/mood';
+import { MOOD_LEVEL_LABELS } from '../../constants/mood';
 import type { Mood } from '../../types';
 import { displayDate } from '../../utils/dateRange';
-import { moodLevelColor, MOOD_TAG_COLORS } from '../../utils/moodColor';
+import { getTagColor, getTagLabel, moodLevelColor } from '../../utils/moodColor';
 
 interface Props {
   mood: Mood;
@@ -19,9 +19,9 @@ export function MoodCard({ mood, footer }: Props) {
           <div className="muted">等级 {mood.mood_level} · {MOOD_LEVEL_LABELS[mood.mood_level]}</div>
         </div>
         <div>
-          {mood.mood_tags.map((tag) => (
-            <Tag key={tag} color={MOOD_TAG_COLORS[tag]}>
-              {MOOD_TAG_LABELS[tag]}
+          {mood.mood_tags.map((tagKey) => (
+            <Tag key={tagKey} color={getTagColor(tagKey)}>
+              {getTagLabel(tagKey)}
             </Tag>
           ))}
         </div>

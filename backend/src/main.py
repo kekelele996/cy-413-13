@@ -7,7 +7,7 @@ from src.config.app import settings
 from src.config.database import Base, engine
 from src.middlewares.audit_logger import AuditLoggerMiddleware
 from src.middlewares.error_handler import register_error_handlers
-from src.routes import assessment, auth, journal, mood, user
+from src.routes import assessment, auth, journal, mood, user, user_mood_tag
 from src.utils.logger import app_logger
 
 
@@ -35,6 +35,7 @@ app.include_router(user.router, prefix="/users", tags=["users"])
 app.include_router(mood.router, prefix="/moods", tags=["moods"])
 app.include_router(assessment.router, prefix="/assessments", tags=["assessments"])
 app.include_router(journal.router, prefix="/journals", tags=["journals"])
+app.include_router(user_mood_tag.router, prefix="/mood-tags", tags=["mood-tags"])
 
 
 @app.get("/health")

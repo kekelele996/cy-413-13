@@ -22,7 +22,7 @@ export interface Mood {
   id: number;
   user_id: number;
   mood_level: number;
-  mood_tags: MoodTag[];
+  mood_tags: string[];
   note?: string | null;
   record_date: string;
   created_at: string;
@@ -30,7 +30,7 @@ export interface Mood {
 
 export interface MoodPayload {
   mood_level: number;
-  mood_tags: MoodTag[];
+  mood_tags: string[];
   note?: string;
   record_date: string;
 }
@@ -38,7 +38,53 @@ export interface MoodPayload {
 export interface MoodTrendPoint {
   date: string;
   mood_level: number;
-  dominant_tag: MoodTag | string;
+  dominant_tag: string;
+}
+
+export interface UserMoodTag {
+  id: number;
+  user_id: number;
+  tag_key: string;
+  label: string;
+  color: string;
+  created_at: string;
+}
+
+export interface UserMoodTagWithStats extends UserMoodTag {
+  usage_count: number;
+}
+
+export interface SystemMoodTagMeta {
+  tag_key: string;
+  label: string;
+  color: string;
+  usage_count: number;
+  is_system: boolean;
+}
+
+export interface AllMoodTagsResponse {
+  system_tags: SystemMoodTagMeta[];
+  custom_tags: UserMoodTagWithStats[];
+}
+
+export interface UserMoodTagCreatePayload {
+  tag_key: string;
+  label: string;
+  color?: string;
+}
+
+export interface UserMoodTagUpdatePayload {
+  label?: string;
+  color?: string;
+}
+
+export interface MoodTagMeta {
+  tag_key: string;
+  label: string;
+  color: string;
+  is_system: boolean;
+  usage_count?: number;
+  id?: number;
 }
 
 export interface AssessmentQuestion {
