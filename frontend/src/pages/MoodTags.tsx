@@ -12,7 +12,7 @@ function sanitizeTagKey(input: string): string {
     .trim()
     .toLowerCase()
     .replace(/\s+/g, '_')
-    .replace(/[^a-z0-9_]/g, '')
+    .replace(/[^\u4e00-\u9fff\u3400-\u4dbfa-z0-9_]/g, '')
     .slice(0, 64);
 }
 
@@ -54,7 +54,7 @@ export function MoodTags() {
     }
     const tagKey = values.tag_key ? sanitizeTagKey(values.tag_key) : sanitizeTagKey(rawLabel);
     if (!tagKey) {
-      message.warning('标签名无效，请包含字母或数字');
+      message.warning('标签名无效');
       return;
     }
     const exists = allTags.some((t) => t.tag_key === tagKey);
@@ -277,8 +277,8 @@ export function MoodTags() {
             <Form.Item name="label" label="标签名称" rules={[{ required: true, message: '请输入标签名称' }]}>
               <Input placeholder="例如：加班、健身、独处" maxLength={64} style={{ width: 240 }} />
             </Form.Item>
-            <Form.Item name="tag_key" label="英文标识（可选）">
-              <Input placeholder="留空将自动生成" maxLength={64} style={{ width: 200 }} />
+            <Form.Item name="tag_key" label="标识（可选，留空自动生成）">
+              <Input placeholder="支持中文、英文、数字" maxLength={64} style={{ width: 200 }} />
             </Form.Item>
             <Form.Item>
               <Space>

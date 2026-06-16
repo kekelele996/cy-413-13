@@ -6,11 +6,11 @@ from pydantic import BaseModel, Field, field_validator
 from src.constants.error_codes import ERROR_CODES
 
 
-TAG_KEY_PATTERN = re.compile(r"^[a-z0-9_]{1,64}$")
+TAG_KEY_PATTERN = re.compile(r"^[\u4e00-\u9fff\u3400-\u4dbfa-z0-9_]{1,64}$")
 
 
 def _sanitize_tag(tag: str) -> str:
-    return re.sub(r"[^a-z0-9_]", "", tag.strip().lower().replace(" ", "_"))
+    return re.sub(r"[^\u4e00-\u9fff\u3400-\u4dbfa-z0-9_]", "", tag.strip().lower().replace(" ", "_"))
 
 
 class MoodBase(BaseModel):

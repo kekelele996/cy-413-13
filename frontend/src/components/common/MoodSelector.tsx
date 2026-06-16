@@ -17,7 +17,7 @@ function sanitizeTagKey(input: string): string {
     .trim()
     .toLowerCase()
     .replace(/\s+/g, '_')
-    .replace(/[^a-z0-9_]/g, '')
+    .replace(/[^\u4e00-\u9fff\u3400-\u4dbfa-z0-9_]/g, '')
     .slice(0, 64);
 }
 

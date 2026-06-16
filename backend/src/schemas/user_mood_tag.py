@@ -1,4 +1,5 @@
 from datetime import datetime
+import re
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -13,7 +14,8 @@ class UserMoodTagBase(BaseModel):
     @field_validator("tag_key")
     @classmethod
     def validate_tag_key(cls, value: str) -> str:
-        value = value.strip().lower().replace(" ", "_")
+        value = value.strip().replace(" ", "_")
+        value = re.sub(r"[^\u4e00-\u9fff\u3400-\u4dbfa-z0-9_]", "", value.lower())
         if not value:
             raise ValueError(f"{ERROR_CODES['MOOD_TAG_INVALID']}: tag_key cannot be empty")
         if len(value) > 64:

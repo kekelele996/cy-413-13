@@ -44,7 +44,7 @@ def _get_or_create_user_tag(
     tag = UserMoodTag(
         user_id=user_id,
         tag_key=tag_key,
-        label=label or tag_key.replace("_", " ").title(),
+        label=label or tag_key.replace("_", " "),
         color=DEFAULT_COLOR_PALETTE[color_index],
     )
     db.add(tag)
@@ -162,7 +162,7 @@ def create_user_tag(db: Session, user: User, payload: UserMoodTagCreate) -> User
 
 
 def ensure_user_tag(db: Session, user: User, tag_key: str, label: str | None = None) -> UserMoodTag | None:
-    sanitized = re.sub(r"[^a-z0-9_]", "", tag_key.strip().lower().replace(" ", "_"))
+    sanitized = re.sub(r"[^\u4e00-\u9fff\u3400-\u4dbfa-z0-9_]", "", tag_key.strip().lower().replace(" ", "_"))
     if not sanitized:
         return None
     system_keys = {t.value for t in MoodTag}
